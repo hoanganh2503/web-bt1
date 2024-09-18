@@ -1,0 +1,1190 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Swagger with Laravel",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/admin/login": {
+            "post": {
+                "tags": [
+                    "Admin Authentication"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "5d4cdb9e3d5c21bb811c6fc86d43d291",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "admin@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/admin/profile": {
+            "get": {
+                "tags": [
+                    "Admin Authentication"
+                ],
+                "summary": "Get profile user details",
+                "operationId": "539f1e7bcbb56775eb8ade21b35d2a96",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/logout": {
+            "post": {
+                "tags": [
+                    "Admin Authentication"
+                ],
+                "summary": "Logout",
+                "operationId": "e57bd33e5159eb824d6c2f4e75b8dfa8",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/change-profile": {
+            "post": {
+                "tags": [
+                    "Admin Authentication"
+                ],
+                "summary": "Change Profile information",
+                "operationId": "fa4bb2978d26def13fdf3a52a3025ead",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "old_password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "new_password": {
+                                        "type": "string",
+                                        "example": "123123"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Hoàng Anh"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "0342835419"
+                                    },
+                                    "image": {
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/categories/index": {
+            "get": {
+                "tags": [
+                    "Categories Management"
+                ],
+                "summary": "Get list of categories",
+                "operationId": "81d5c63cfe0e75c2c4577a0600b8308a",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search categories by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "food"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for paginated results",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "perpage",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 20
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/categories/detail": {
+            "get": {
+                "tags": [
+                    "Categories Management"
+                ],
+                "summary": "Get detail of category",
+                "operationId": "34aea717e23e806a24b10c3f3df32172",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Id of category",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/categories/create": {
+            "post": {
+                "tags": [
+                    "Categories Management"
+                ],
+                "summary": "Create a new category",
+                "operationId": "9e390035ddbb83b40164f08d1ea49f22",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Hoàng Anh"
+                                    },
+                                    "image": {
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/categories/edit": {
+            "post": {
+                "tags": [
+                    "Categories Management"
+                ],
+                "summary": "Update new category",
+                "operationId": "a8d7d75e63779b99cfc031f3368178d2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Hoàng Anh"
+                                    },
+                                    "image": {
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/categories/delete": {
+            "delete": {
+                "tags": [
+                    "Categories Management"
+                ],
+                "summary": "Delete a category",
+                "operationId": "6f752e19c758ec2a0cb684824f644a40",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Category ID is deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/deliveries/index": {
+            "get": {
+                "tags": [
+                    "Delivery Management"
+                ],
+                "summary": "Get list of deliveries",
+                "operationId": "64c2ebb04cb17a6e3ef1bb1aca1469b0",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search delivery by name, phone and email",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "food"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for paginated results",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "perpage",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 20
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/deliveries/detail": {
+            "get": {
+                "tags": [
+                    "Delivery Management"
+                ],
+                "summary": "Get detail of delivery",
+                "operationId": "2d57b15207d14c274764039785d4aaac",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Id of delivery",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/deliveries/create": {
+            "post": {
+                "tags": [
+                    "Delivery Management"
+                ],
+                "summary": "Create a new delivery",
+                "operationId": "30fae06bdf9b228d91c96934c53b9512",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Số 112 Nguyễn Bỉnh Khiêm"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Giao hàng tiết kiệm"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "0342835419"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "ghtk@gmail.com"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Giao hàng rẻ nhưng không nhanh"
+                                    },
+                                    "image": {
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/deliveries/edit": {
+            "post": {
+                "tags": [
+                    "Delivery Management"
+                ],
+                "summary": "Update new delivery",
+                "operationId": "0ea0e6b1aff3ffd7061362bec9eec6c6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Số 112 Nguyễn Bỉnh Khiêm"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Giao hàng tiết kiệm"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "0342835419"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "ghtk@gmail.com"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Giao hàng rẻ nhưng không nhanh"
+                                    },
+                                    "image": {
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/deliveries/delete": {
+            "delete": {
+                "tags": [
+                    "Delivery Management"
+                ],
+                "summary": "Delete a delivery",
+                "operationId": "84fead33e7a4ae36c1607da8829bf975",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Delivery ID is deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/products/index": {
+            "get": {
+                "tags": [
+                    "Product Management"
+                ],
+                "summary": "Get list of products",
+                "operationId": "5946b89f5ead55364219e1cd090e6b7f",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search product by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "food"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for paginated results",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "perpage",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 20
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/products/detail": {
+            "get": {
+                "tags": [
+                    "Product Management"
+                ],
+                "summary": "Get detail of Product",
+                "operationId": "9e63289bc62e240a202b71724cc796fd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Id of Product",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/products/create": {
+            "post": {
+                "tags": [
+                    "Product Management"
+                ],
+                "summary": "Create a new Product",
+                "operationId": "944a15ab2c7c2ff4f72d6e3e3296f626",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Iphone 16 promax"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Giao hàng rẻ nhưng không nhanh"
+                                    },
+                                    "image": {
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/products/edit": {
+            "post": {
+                "tags": [
+                    "Product Management"
+                ],
+                "summary": "Update new Product",
+                "operationId": "0d08c94ff8e082997ed88c2e46f25f81",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Hoa Loa kèn"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Hoa Loa kèn rất loa kèn"
+                                    },
+                                    "image": {
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/products/delete": {
+            "delete": {
+                "tags": [
+                    "Product Management"
+                ],
+                "summary": "Delete a Product",
+                "operationId": "36773dd30c318a6b4036e11836570d9f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Product ID is deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/products/detail-child": {
+            "get": {
+                "tags": [
+                    "Product Management"
+                ],
+                "summary": "Get detail of Feature Product",
+                "operationId": "14a98a2f1b0041f5aac8412dcef2f332",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Id of Product",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/products/create-child": {
+            "post": {
+                "tags": [
+                    "Product Management"
+                ],
+                "summary": "Create a new Feature Product",
+                "operationId": "bfc4e70940fc25701f36aa559710cc56",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "product_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "feature_name": {
+                                        "type": "string",
+                                        "example": "Iphone 16 promax"
+                                    },
+                                    "cost_price": {
+                                        "type": "integer",
+                                        "example": 20000
+                                    },
+                                    "selling_price": {
+                                        "type": "integer",
+                                        "example": 30000
+                                    },
+                                    "quantity": {
+                                        "type": "integer",
+                                        "example": 200
+                                    },
+                                    "image": {
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/products/edit-child": {
+            "post": {
+                "tags": [
+                    "Product Management"
+                ],
+                "summary": "Edit a Feature Product",
+                "operationId": "162c68510e2d42eb6e94721d287b59cf",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "product_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "feature_name": {
+                                        "type": "string",
+                                        "example": "Iphone 16 promax"
+                                    },
+                                    "cost_price": {
+                                        "type": "integer",
+                                        "example": 20000
+                                    },
+                                    "selling_price": {
+                                        "type": "integer",
+                                        "example": 30000
+                                    },
+                                    "quantity": {
+                                        "type": "integer",
+                                        "example": 200
+                                    },
+                                    "image": {
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/products/delete-child": {
+            "delete": {
+                "tags": [
+                    "Product Management"
+                ],
+                "summary": "Delete a Feature Product",
+                "operationId": "b4764574ec6b80e26433b9f98b845534",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Product ID is deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/users/index": {
+            "get": {
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Get list of users",
+                "operationId": "152ae101a32f0f352efaf73fd3aee2ab",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search user by name, phone and email",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "food"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for paginated results",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "0:deactivated, 1:activated",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "perpage",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 20
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/users/detail": {
+            "get": {
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Get detail of User",
+                "operationId": "64cf30b8edcd2b618b9899131d1b01b8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Id of User",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/users/change-status": {
+            "post": {
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Change the status of a user",
+                "operationId": "f0e4e56c775c0e9914b208e0d788c9e6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "User ID to change status",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/users/delete": {
+            "delete": {
+                "tags": [
+                    "User Management"
+                ],
+                "summary": "Delete a User",
+                "operationId": "b699309f6a7abc8284be7f4e59f65dc1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "User ID is deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Admin Authentication",
+            "description": "Admin Authentication"
+        },
+        {
+            "name": "Categories Management",
+            "description": "Categories Management"
+        },
+        {
+            "name": "Delivery Management",
+            "description": "Delivery Management"
+        },
+        {
+            "name": "Product Management",
+            "description": "Product Management"
+        },
+        {
+            "name": "User Management",
+            "description": "User Management"
+        }
+    ]
+}
