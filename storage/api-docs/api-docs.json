@@ -139,6 +139,110 @@
                 ]
             }
         },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "User Authentication"
+                ],
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "75689dd79b5b6c7488e1086641454a66",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "User Authentication"
+                ],
+                "summary": "Create new account",
+                "operationId": "d85109139d9c4a6989309db48b39ff34",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user@gmail.com"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "user"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "0342835419"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "User Authentication"
+                ],
+                "summary": "Logout",
+                "operationId": "476f02786c121158ae351187afb3dba1",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/admin/categories/index": {
             "get": {
                 "tags": [
@@ -587,6 +691,128 @@
                 ]
             }
         },
+        "/api/home": {
+            "get": {
+                "tags": [
+                    "Pages for users"
+                ],
+                "summary": "Home",
+                "operationId": "b461dadb5182cff7e65354d18b527085",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search product by name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "food"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/product": {
+            "get": {
+                "tags": [
+                    "Pages for users"
+                ],
+                "summary": "Product information",
+                "operationId": "4f065ec797127a4705bc2a0908035d38",
+                "parameters": [
+                    {
+                        "name": "product_id",
+                        "in": "query",
+                        "description": "ID of product",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/add-to-cart": {
+            "post": {
+                "tags": [
+                    "Pages for users"
+                ],
+                "summary": "Add product to cart",
+                "operationId": "03fb0ab7f423e40ef70bdda241a1eddb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "feature_product_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "quantity": {
+                                        "type": "integer",
+                                        "example": 200
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/cart": {
+            "get": {
+                "tags": [
+                    "Pages for users"
+                ],
+                "summary": "View cart",
+                "operationId": "c8ae591454fb9b0848916dc655430247",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/admin/products/index": {
             "get": {
                 "tags": [
@@ -604,6 +830,16 @@
                             "type": "string"
                         },
                         "example": "food"
+                    },
+                    {
+                        "name": "category_id",
+                        "in": "query",
+                        "description": "Category id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
                     },
                     {
                         "name": "page",
@@ -688,6 +924,18 @@
                         "multipart/form-data": {
                             "schema": {
                                 "properties": {
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "cost_price": {
+                                        "type": "integer",
+                                        "example": 20000
+                                    },
+                                    "selling_price": {
+                                        "type": "integer",
+                                        "example": 30000
+                                    },
                                     "name": {
                                         "type": "string",
                                         "example": "Iphone 16 promax"
@@ -736,6 +984,18 @@
                                     "id": {
                                         "type": "integer",
                                         "example": 1
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "cost_price": {
+                                        "type": "integer",
+                                        "example": 20000
+                                    },
+                                    "selling_price": {
+                                        "type": "integer",
+                                        "example": 30000
                                     },
                                     "name": {
                                         "type": "string",
@@ -1171,12 +1431,20 @@
             "description": "Admin Authentication"
         },
         {
+            "name": "User Authentication",
+            "description": "User Authentication"
+        },
+        {
             "name": "Categories Management",
             "description": "Categories Management"
         },
         {
             "name": "Delivery Management",
             "description": "Delivery Management"
+        },
+        {
+            "name": "Pages for users",
+            "description": "Pages for users"
         },
         {
             "name": "Product Management",

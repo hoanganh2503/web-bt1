@@ -33,6 +33,14 @@ class ProductController extends Controller
      *         required=false,
      *      ),
      *      @OA\Parameter(
+     *         name="category_id",
+     *         in="query",
+     *         description="Category id",
+     *         example=1,
+     *         @OA\Schema(type="integer"),
+     *         required=false,
+     *      ),
+     *      @OA\Parameter(
      *         name="page",
      *         in="query",
      *         description="Page number for paginated results",
@@ -99,6 +107,9 @@ class ProductController extends Controller
      *        @OA\MediaType(
      *            mediaType="multipart/form-data",
      *            @OA\Schema(
+     *                @OA\Property(property="category_id", type="integer", example=1),
+     *                @OA\Property(property="cost_price", type="integer", example=20000),
+     *                @OA\Property(property="selling_price", type="integer", example=30000),
      *                @OA\Property(property="name", type="string", example="Iphone 16 promax"),
      *                @OA\Property(property="description", type="string", example="Giao hàng rẻ nhưng không nhanh"),
      *                @OA\Property(property="image", type="file"),
@@ -130,6 +141,9 @@ class ProductController extends Controller
      *            mediaType="multipart/form-data",
      *            @OA\Schema(
      *                @OA\Property(property="id", type="integer", example=1),
+     *                @OA\Property(property="category_id", type="integer", example=1),
+     *                @OA\Property(property="cost_price", type="integer", example=20000),
+     *                @OA\Property(property="selling_price", type="integer", example=30000),
      *                @OA\Property(property="name", type="string", example="Hoa Loa kèn"),
      *                @OA\Property(property="description", type="string", example="Hoa Loa kèn rất loa kèn"),
      *                @OA\Property(property="image", type="file"),

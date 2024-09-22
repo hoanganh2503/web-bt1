@@ -11,4 +11,7 @@ interface AuthRepositoryInterface extends BaseRepositoryInterface
     public function profile(AuthRequest $request);
     public function logout(AuthRequest $request);
     public function changeProfile(AuthRequest $request);
+    public function userLogin(AuthRequest $request);
+    public function userRegister(AuthRequest $request);
+
 }

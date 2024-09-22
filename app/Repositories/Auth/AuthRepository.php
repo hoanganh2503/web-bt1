@@ -3,6 +3,7 @@
 namespace App\Repositories\Auth;
 
 use App\Http\Requests\AuthRequest;
+use App\Models\User;
 use App\Repositories\Auth\AuthRepositoryInterface;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
@@ -23,8 +24,7 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
         $email = $request->email ?? null;
         $password = $request->password ?? null;
         try{
-            DB::beginTransaction();
-            $user = $this->model->where('email', $email)->first();
+            $user = $this->model->where('email', $email)->where('role_id', User::$admin)->first();
             if(!$user || !Hash::check($password, $user->password)){
                 DB::rollBack();
                 return response()->json([
@@ -39,14 +39,12 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
                 'token_type' => 'Bearer'
             ];
         }catch(\Exception $e){
-            DB::rollBack();
             return response()->json([
                 'status' => 500,
                 'message' => $e->getMessage(),
                 'data' => []
             ]);
         }
-        DB::commit();
         return response()->json([
             'status' => 200,
             'message' => "Success",
@@ -89,7 +87,6 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
             'data' => []
         ], 200);  
     }
-
 
     public function changeProfile(AuthRequest $request)
     {
@@ -136,6 +133,70 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
             'data' => []
         ]);
 
+    }
+
+    public function userLogin(AuthRequest $request){
+        $email = $request->email ?? null;
+        $password = $request->password ?? null;
+        try{
+            $user = $this->model->where('email', $email)->where('role_id', User::$user)->first();
+            if(!$user || !Hash::check($password, $user->password)){
+                DB::rollBack();
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Tài khoản hoặc mật khẩu không đúng',
+                    'data' => []
+                 ], 404);
+            }
+            $token = $user->createToken($user->name.'Auth-token')->plainTextToken;
+            $data = [
+                'access_token' => $token,
+                'token_type' => 'Bearer'
+            ];
+        }catch(\Exception $e){
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => "Success",
+            'data' => $data
+        ], 200);
+    }
+
+    public function userRegister(AuthRequest $request){
+        $inputRequest = $request->only('email', 'password', 'name', 'phone');
+        try{
+            DB::beginTransaction();
+            $data = [
+                'email' => $inputRequest['email'],
+                'password' =>  bcrypt($inputRequest['password']),
+                'name' => $inputRequest['name'],
+                'phone' => $inputRequest['phone'],
+                'role_id' => User::$user,
+                'status' => 1,
+                'img' => 'uploads/profile/avatar.png',
+                'created_at' => time(),
+                'updated_at' => time()
+            ];
+            $this->model->create($data);
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+        DB::commit();
+         return response()->json([
+            'status' => 200,
+            'message' => "Success",
+            'data' => $data
+        ], 200);
     }
 
 }

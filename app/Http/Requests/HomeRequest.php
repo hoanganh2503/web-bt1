@@ -3,11 +3,11 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
+class HomeRequest extends FormRequest
 
-class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,41 +26,32 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {   
-        $action =explode('/', $this->route()->Uri())[3];
+        $uri = explode('/', $this->route()->Uri());
+        $action =$uri[1];
         $rules = array();
         switch($action) {
-            case 'index':
+            case 'product':
                 $rules = [
-                    'search' =>'nullable|string|min:1|max:255',
-                    'category_id' =>'nullable|integer|exists:true',
-                    'page' => 'integer',
-                    'perpage' => 'integer',
+                    'product_id' =>'required|integer|exists:products,id',
                 ];
                 break;
-            case 'detail':
+            case 'add-to-cart':
                 $rules = [
-                    'id' =>'integer|required|exists:categories,id',
+                    'feature_product_id' =>'required|exists:feature_products,id',
+                    'quantity' =>'required|integer|min:1',
                 ];
                 break;
-            case 'create':
+            case 'change-profile':
                 $rules = [
-                    'name' =>'required|string|min:3|max:255|unique:categories',
-                    'image' =>'mimes:jpeg,jpg,png,gif|required|max:10000',
-                ];
-                break;
-            case 'edit':
-                $rules = [
-                    'id' =>'integer|required|exists:categories,id',
-                    'name' =>'nullable|string|min:3|max:255|unique:categories',
+                    'old_password' =>'nullable|string|min:6|max:255',
+                    'new_password' =>'nullable|string|min:6|max:255',
+                    'phone' => 'nullable|regex:/(0)[0-9]{9}/',
+                    'name' =>'nullable|string|min:3|max:255',
                     'image' =>'mimes:jpeg,jpg,png,gif|nullable|max:10000',
                 ];
                 break;
-            case 'delete':
-                $rules = [
-                    'id' =>'integer|required|exists:categories,id',
-                ];
-                break;
-        }
+        } 
+
         return $rules;
     }
 

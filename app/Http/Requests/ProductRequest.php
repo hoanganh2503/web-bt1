@@ -31,6 +31,7 @@ class ProductRequest extends FormRequest
         switch($action) {
             case 'index':
                 $rules = [
+                    'category_id' => 'nullable|integer|exists:categories,id',
                     'search' =>'nullable|string|min:1|max:255',
                     'page' => 'integer',
                     'perpage' => 'integer',
@@ -44,6 +45,9 @@ class ProductRequest extends FormRequest
                 break;
             case 'create':
                 $rules = [
+                    'category_id' => 'required|integer|exists:categories,id',
+                    'cost_price' =>'required|integer|min:0',
+                    'selling_price' =>'required|integer|min:' . request()->input('cost_price') + 1,
                     'name' =>'required|string|min:3|max:255|unique:products',
                     'description' =>'required',
                     'image' =>'mimes:jpeg,jpg,png,gif|required|max:10000',
@@ -52,6 +56,9 @@ class ProductRequest extends FormRequest
             case 'edit':
                 $rules = [
                     'id' =>'integer|required|exists:products,id',
+                    'category_id' => 'nullable|integer|exists:categories,id',
+                    'cost_price' =>'required|integer|min:0',
+                    'selling_price' =>'required|integer|min:' . request()->input('cost_price') + 1,
                     'name' =>'nullable|string|min:3|max:255|unique:products',
                     'description' =>'nullable',
                     'image' =>'mimes:jpeg,jpg,png,gif|nullable|max:10000',

@@ -26,32 +26,56 @@ class AuthRequest extends FormRequest
      */
     public function rules()
     {   
-        $action =explode('/', $this->route()->Uri())[2];
+        $uri = explode('/', $this->route()->Uri());
         $rules = array();
-        switch($action) {
-            case 'login':
-                $rules = [
-                    'email' =>'required|email|max:255',
-                    'password' => 'required|string|min:6',
-                ];
-                break;
-            case 'register':
-                $rules = [
-                    'name' =>'required|string|max:255',
-                    'email' =>'required|email|max:255|unique:users',
-                    'password' => 'required|string|min:6',
-                ];
-                break;
-            case 'change-profile':
-                $rules = [
-                    'old_password' =>'nullable|string|min:6|max:255',
-                    'new_password' =>'nullable|string|min:6|max:255',
-                    'phone' => 'nullable|regex:/(0)[0-9]{9}/',
-                    'name' =>'nullable|string|min:3|max:255',
-                    'image' =>'mimes:jpeg,jpg,png,gif|nullable|max:10000',
-                ];
-                break;
+        if (count($uri) == 3){
+            $action =$uri[2];
+            switch($action) {
+                case 'login':
+                    $rules = [
+                        'email' =>'required|email|max:255',
+                        'password' => 'required|string|min:6',
+                    ];
+                    break;
+                case 'change-profile':
+                    $rules = [
+                        'old_password' =>'nullable|string|min:6|max:255',
+                        'new_password' =>'nullable|string|min:6|max:255',
+                        'phone' => 'nullable|regex:/(0)[0-9]{9}/',
+                        'name' =>'nullable|string|min:3|max:255',
+                        'image' =>'mimes:jpeg,jpg,png,gif|nullable|max:10000',
+                    ];
+                    break;
+            }            
+        }else{
+            $action =$uri[1];
+            switch($action) {
+                case 'login':
+                    $rules = [
+                        'email' =>'required|email|max:255',
+                        'password' => 'required|string|min:6',
+                    ];
+                    break;
+                case 'register':
+                    $rules = [
+                        'name' =>'required|string|max:255',
+                        'phone' => 'required|regex:/(0)[0-9]{9}/|unique:users',
+                        'email' =>'required|email|max:255|unique:users',
+                        'password' => 'required|string|min:6',
+                    ];
+                    break;
+                case 'change-profile':
+                    $rules = [
+                        'old_password' =>'nullable|string|min:6|max:255',
+                        'new_password' =>'nullable|string|min:6|max:255',
+                        'phone' => 'nullable|regex:/(0)[0-9]{9}/',
+                        'name' =>'nullable|string|min:3|max:255',
+                        'image' =>'mimes:jpeg,jpg,png,gif|nullable|max:10000',
+                    ];
+                    break;
+            } 
         }
+
         return $rules;
     }
 

@@ -108,4 +108,72 @@ class AuthController extends Controller
     {
         return $this->authRepositoryInterface->changeProfile($request);
     }
+
+    /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     summary="Authenticate user and generate JWT token",
+     *     tags={"User Authentication"},
+     *     @OA\RequestBody(
+     *        required=true,
+     *        @OA\MediaType(
+     *            mediaType="application/json",
+     *            @OA\Schema(
+     *                @OA\Property(property="email", type="string", example="user@gmail.com"),
+     *                @OA\Property(property="password", type="string", example="123456")
+     *            )
+     *        )
+     *     ),
+     *     @OA\Response(response="200", description="Login successful"),
+     *     @OA\Response(response="401", description="Invalid credentials")
+     * )
+     */
+    public function userLogin(AuthRequest $request) : JsonResponse
+    {
+        return $this->authRepositoryInterface->userLogin($request);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/register",
+     *     summary="Create new account",
+     *     tags={"User Authentication"},
+     *     @OA\RequestBody(
+     *        required=true,
+     *        @OA\MediaType(
+     *            mediaType="application/json",
+     *            @OA\Schema(
+     *                @OA\Property(property="email", type="string", example="user@gmail.com"),
+     *                @OA\Property(property="name", type="string", example="user"),
+     *                @OA\Property(property="phone", type="string", example="0342835419"),
+     *                @OA\Property(property="password", type="string", example="123456")
+     *            )
+     *        )
+     *     ),
+     *     @OA\Response(response="200", description="Login successful"),
+     *     @OA\Response(response="401", description="Invalid credentials")
+     * )
+     */
+    public function userRegister(AuthRequest $request) : JsonResponse
+    {
+        return $this->authRepositoryInterface->userRegister($request);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/logout",
+     *     summary="Logout",
+     *     tags={"User Authentication"},
+     *     @OA\Response(response="200", description="Success",
+     *         @OA\MediaType(
+     *            mediaType="application/json"
+     *         )
+     *     ),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    public function logoutUser(AuthRequest $request)
+    {
+        return $this->authRepositoryInterface->logout($request);
+    }
 }

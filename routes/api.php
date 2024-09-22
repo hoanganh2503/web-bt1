@@ -3,8 +3,10 @@
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\DeliveryController;
+use App\Http\Controllers\api\HomeController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\UserController;
+use App\Http\Requests\HomeRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+// API for admin
 Route::group(['prefix'=>'admin'], function(){
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
@@ -26,7 +28,6 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::post('/change-profile', [AuthController::class, 'changeProfile']);
         Route::get('/profile', [AuthController::class, 'profile']);
-        Route::get('/user', [AuthController::class, 'user']);
 
         Route::group(['prefix'=>'categories'], function(){
             Route::get('/index', [CategoryController::class, 'index']);
@@ -67,5 +68,20 @@ Route::group(['prefix'=>'admin'], function(){
 
     });    
 });
+
+
+// API for user
+Route::post('/login', [AuthController::class, 'userLogin']);
+Route::post('/register', [AuthController::class, 'userRegister']);
+Route::get('/home', [HomeController::class, 'home']);
+Route::get('/product', [HomeController::class, 'product']);
+
+Route::middleware(['auth:sanctum', 'user'])->group(function() {
+    Route::post('/logout', [AuthController::class, 'logoutUser']);
+    // Route::post('/change-profile', [AuthController::class, 'changeProfile']);
+    // Route::get('/profile', [AuthController::class, 'profile']);
+    Route::post('/add-to-cart', [HomeController::class, 'addToCart']);
+    Route::get('/cart', [HomeController::class, 'cart']);
+});    
 
 

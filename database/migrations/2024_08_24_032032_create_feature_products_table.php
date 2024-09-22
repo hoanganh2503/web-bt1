@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('feature_products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products', 'id')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('featured_name', 255);
+            $table->string('feature_name', 255);
             $table->integer('cost_price');
             $table->integer('selling_price');
             $table->integer('quantity');

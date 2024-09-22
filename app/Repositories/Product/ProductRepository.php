@@ -31,9 +31,13 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     public function getListProducts(ProductRequest $request, $perpage = 10){
         $search = $request->search ?? null;
         $perpage = $request->perpage ?? $perpage;
+        $category_id = $request->category_id ?? null;
         try{
             $data = $this->product->when($search, function($query, $search){
                     $query->where('name', 'like', '%'.$search.'%');
+                })
+                ->when(isset($request->category_id), function($query) use ($category_id){
+                    $query->where('category_id', $category_id);
                 })
                 ->orderBy('created_at', 'desc')
                 ->paginate($perpage);
@@ -85,7 +89,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     }
 
     public function addProduct(ProductRequest $request){
-        $data = $request->only('name', 'description');
+        $data = $request->only('name', 'description', 'category_id', 'cost_price', 'selling_price');
         try{
             DB::beginTransaction();
             $data['created_at'] = time();
@@ -110,7 +114,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     public function updateProduct(ProductRequest $request){
         $id = $request->id;
-        $data = $request->only('name', 'address', 'phone', 'email', 'description');
+        $data = $request->only('name', 'category_id', 'description', 'cost_price', 'selling_price');
         $product = $this->product->find($id);
         try{
             DB::beginTransaction();

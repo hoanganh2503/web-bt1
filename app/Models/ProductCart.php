@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class ProductCart extends Model
 {
     use HasFactory;
         /**
@@ -14,12 +14,9 @@ class Product extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'category_id',
-        'name',
-        'cost_price',
-        'selling_price',
-        'description',
-        'img',
+        'user_id',
+        'feature_product_id',
+        'quantity',
         'created_at',
         'updated_at'
     ];
@@ -31,9 +28,5 @@ class Product extends Model
      */
     protected $hidden = [
     ];
-
-    public function listChild(){
-        return $this->hasMany(FeatureProduct::class)->orderBy('created_at', 'desc');
-    }
 
 }
