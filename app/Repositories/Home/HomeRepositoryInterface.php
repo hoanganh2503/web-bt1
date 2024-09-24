@@ -11,5 +11,13 @@ interface HomeRepositoryInterface extends BaseRepositoryInterface
     public function product($id);
     public function addToCart(HomeRequest $request);
     public function cart(HomeRequest $request);
+    public function profile(HomeRequest $request);
+    public function changeProfile(HomeRequest $request);
+
+    public function getListAddresses(HomeRequest $request);
+    public function getDetailAddress($id);
+    public function addAddress(HomeRequest $request);
+    public function updateAddress(HomeRequest $request);
+    public function deleteAddress($id);
 
 }

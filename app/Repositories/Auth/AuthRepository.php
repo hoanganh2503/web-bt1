@@ -36,6 +36,7 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
             $token = $user->createToken($user->name.'Auth-token')->plainTextToken;
             $data = [
                 'access_token' => $token,
+                'role_id' => $user->role_id,
                 'token_type' => 'Bearer'
             ];
         }catch(\Exception $e){
@@ -151,6 +152,7 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
             $token = $user->createToken($user->name.'Auth-token')->plainTextToken;
             $data = [
                 'access_token' => $token,
+                'role_id' => $user->role_id,
                 'token_type' => 'Bearer'
             ];
         }catch(\Exception $e){

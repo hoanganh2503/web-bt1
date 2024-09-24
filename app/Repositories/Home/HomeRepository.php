@@ -3,15 +3,18 @@
 namespace App\Repositories\Home;
 
 use App\Http\Requests\HomeRequest;
+use App\Models\Address;
 use App\Models\Category;
 use App\Models\FeatureHome;
 use App\Models\FeatureProduct;
 use App\Models\Home;
 use App\Models\Product;
 use App\Models\ProductCart;
+use App\Models\User;
 use App\Repositories\Home\HomeRepositoryInterface;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class HomeRepository.
@@ -154,6 +157,172 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
             'status' => 200,
             'message' => "Success",
             'data' => $data
+        ]);
+    }
+
+    public function profile(HomeRequest $request){
+        try{
+            $user = $request->user();  
+            if($user['img'] != null) $user['img'] = asset('storage/'.$user['img']);
+        }catch(\Exception $e){
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => "Success",
+            'data' => $user
+        ], 200);  
+
+    }
+
+    public function changeProfile(HomeRequest $request)
+    {
+        try{
+            $oldPassword = $request->old_password ?? null;
+            $newPassword = $request->new_password ?? null;
+            $name = $request->name ?? null;
+            $phone = $request->phone ?? null;
+            $user = $request->user();
+            DB::beginTransaction();
+
+            $data = [];
+            if(isset($request->new_password)){
+                if(!Hash::check($oldPassword, $user->password)){
+                    return response()->json([
+                        'status' => 422,
+                        'message' => 'Old password is incorrect!',
+                        'data' => []
+                    ]);
+                }
+                $data['password'] = bcrypt($newPassword);
+            }
+            $data['name'] = $name;
+            $data['phone'] = $phone;
+            
+            if($request->hasFile('image')){
+                $file = $request->file('image');
+                $data['img'] = $this->saveFile($file, 'uploads/profile', $user->img);
+            }
+            
+            User::find($user->id)->update($data);
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+        DB::commit();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Update profile successfully',
+            'data' => []
+        ]);
+
+    }
+
+    public function getListAddresses(HomeRequest $request)
+    {
+        try{
+            $data = Address::where('user_id', $request->user()->id)->orderBy('created_at', 'DESC')->get();
+        }catch(\Exception $e){
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => "Success",
+            'data' => $data
+        ]);
+    }
+
+    public function getDetailAddress($id){
+        try{
+            $data = Address::find($id);
+        }catch(\Exception $e){
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => "Success",
+            'data' => $data
+        ]);
+    }
+
+    public function addAddress(HomeRequest $request){
+        $data = $request->only('name', 'detail_address', 'phone', 'ward_id');
+        $data['user_id'] = $request->user()->id;
+
+        try{
+            DB::beginTransaction();
+            $data['created_at'] = time();
+            $data['updated_at'] = time();
+            $res = Address::create($data);
+
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+        DB::commit();
+        return $this->getDetailAddress($res->id);
+    }
+
+    public function updateAddress(HomeRequest $request){
+        $id = $request->id;
+        $data = $request->only('name', 'detail_address', 'phone', 'ward_id');
+        $data['user_id'] = $request->user()->id;
+        $address = Address::find($id);
+        try{
+            DB::beginTransaction();
+            $data['updated_at'] = time();
+            $address->update($data);
+
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+        DB::commit();
+        return $this->getDetailAddress($id);
+    }
+
+    public function deleteAddress($id){
+        try{
+            DB::beginTransaction();
+            Address::find($id)->delete();
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+        DB::commit();
+        return response()->json([
+           'status' => 200,
+           'message' => "Success",
+           'data' => []
         ]);
     }
 

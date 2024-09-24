@@ -813,6 +813,275 @@
                 ]
             }
         },
+        "/api/profile": {
+            "get": {
+                "tags": [
+                    "Pages for users"
+                ],
+                "summary": "Get profile user details",
+                "operationId": "4edec888f00c945926dd2a05a284c616",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/change-profile": {
+            "post": {
+                "tags": [
+                    "Pages for users"
+                ],
+                "summary": "Change Profile information",
+                "operationId": "9a18acad0ec15699cbf56acb02562aee",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "old_password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "new_password": {
+                                        "type": "string",
+                                        "example": "123123"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Hoàng Anh"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "0342835419"
+                                    },
+                                    "image": {
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/address": {
+            "get": {
+                "tags": [
+                    "User's Address"
+                ],
+                "summary": "Get list of addresses",
+                "operationId": "61bfae2a43edb79ceb2ea8399d83eafd",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/detail-address": {
+            "get": {
+                "tags": [
+                    "User's Address"
+                ],
+                "summary": "Get detail address information",
+                "operationId": "feb94d4c295b2e721c6a97af161c95cb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Id address information",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/create-address": {
+            "post": {
+                "tags": [
+                    "User's Address"
+                ],
+                "summary": "Create address information",
+                "operationId": "a22151cd35fd63cec5982efef42cd287",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "detail_address": {
+                                        "type": "string",
+                                        "example": "Số 112 Nguyễn Bỉnh Khiêm"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Giao hàng tiết kiệm"
+                                    },
+                                    "ward_id": {
+                                        "type": "string",
+                                        "example": "00091"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "0342835419"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/edit-address": {
+            "post": {
+                "tags": [
+                    "User's Address"
+                ],
+                "summary": "Edit address information",
+                "operationId": "0d644813279281b49bb4acc8b6dcf0aa",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "detail_address": {
+                                        "type": "string",
+                                        "example": "Số 112 Nguyễn Bỉnh Khiêm"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Giao hàng tiết kiệm"
+                                    },
+                                    "ward_id": {
+                                        "type": "string",
+                                        "example": "00091"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "0342835419"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/delete-address": {
+            "delete": {
+                "tags": [
+                    "User's Address"
+                ],
+                "summary": "Delete a Address",
+                "operationId": "afd49c3ad7b908383749180323c15190",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Address ID is deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/admin/products/index": {
             "get": {
                 "tags": [
@@ -1445,6 +1714,10 @@
         {
             "name": "Pages for users",
             "description": "Pages for users"
+        },
+        {
+            "name": "User's Address",
+            "description": "User's Address"
         },
         {
             "name": "Product Management",

@@ -66,7 +66,6 @@ class AuthRequest extends FormRequest
                     break;
                 case 'change-profile':
                     $rules = [
-                        'old_password' =>'nullable|string|min:6|max:255',
                         'new_password' =>'nullable|string|min:6|max:255',
                         'phone' => 'nullable|regex:/(0)[0-9]{9}/',
                         'name' =>'nullable|string|min:3|max:255',

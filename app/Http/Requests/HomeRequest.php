@@ -43,13 +43,36 @@ class HomeRequest extends FormRequest
                 break;
             case 'change-profile':
                 $rules = [
-                    'old_password' =>'nullable|string|min:6|max:255',
                     'new_password' =>'nullable|string|min:6|max:255',
                     'phone' => 'nullable|regex:/(0)[0-9]{9}/',
                     'name' =>'nullable|string|min:3|max:255',
                     'image' =>'mimes:jpeg,jpg,png,gif|nullable|max:10000',
                 ];
                 break;
+            case 'detail-address':
+            case 'delete-address':
+                $rules = [
+                    'id' =>'required|integer|exists:address,id',
+                ];
+                break;
+            case 'create-address':
+                $rules = [
+                    'name' =>'required|string|min:3|max:255',
+                    'detail_address' =>'required|string|max:255',
+                    'phone' =>'required|regex:/(0)[0-9]{7}/|max:12',
+                    'ward_id' =>'required|regex:/[0-9]{5}/|max:5',
+                ];
+                break;
+            case 'edit-address':
+                $rules = [
+                    'id' =>'integer|required|exists:address,id',
+                    'name' =>'nullable|string|min:3|max:255',
+                    'detail_address' =>'nullable|string|max:255',
+                    'phone' =>'nullable|regex:/(0)[0-9]{7}/|max:12',
+                    'ward_id' =>'nullable|regex:/[0-9]{5}/|max:5',
+                ];
+                break;
+
         } 
 
         return $rules;

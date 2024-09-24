@@ -6,7 +6,6 @@ use App\Http\Controllers\api\DeliveryController;
 use App\Http\Controllers\api\HomeController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\UserController;
-use App\Http\Requests\HomeRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -78,10 +77,16 @@ Route::get('/product', [HomeController::class, 'product']);
 
 Route::middleware(['auth:sanctum', 'user'])->group(function() {
     Route::post('/logout', [AuthController::class, 'logoutUser']);
-    // Route::post('/change-profile', [AuthController::class, 'changeProfile']);
-    // Route::get('/profile', [AuthController::class, 'profile']);
     Route::post('/add-to-cart', [HomeController::class, 'addToCart']);
     Route::get('/cart', [HomeController::class, 'cart']);
+    Route::get('/profile', [HomeController::class, 'profile']);
+    Route::post('/change-profile', [HomeController::class, 'changeProfile']);
+
+    Route::get('/address', [HomeController::class, 'address']);
+    Route::get('/detail-address', [HomeController::class, 'detailAddress']);
+    Route::post('/create-address', [HomeController::class, 'createAddress']);
+    Route::post('/edit-address', [HomeController::class, 'editAddress']);
+    Route::delete('/delete-address', [HomeController::class, 'deleteAddress']);
 });    
 
 

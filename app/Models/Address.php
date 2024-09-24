@@ -21,6 +21,7 @@ class Address extends Model
         'detail_address',
         'ward_id',
         'phone',
+        'note',
         'name'
     ];
 
