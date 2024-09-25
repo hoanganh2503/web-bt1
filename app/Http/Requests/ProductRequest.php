@@ -57,8 +57,8 @@ class ProductRequest extends FormRequest
                 $rules = [
                     'id' =>'integer|required|exists:products,id',
                     'category_id' => 'nullable|integer|exists:categories,id',
-                    'cost_price' =>'required|integer|min:0',
-                    'selling_price' =>'required|integer|min:' . request()->input('cost_price') + 1,
+                    'cost_price' =>'nullable|integer|min:0',
+                    'selling_price' =>'nullable|integer|min:' . request()->input('cost_price') + 1,
                     'name' =>'nullable|string|min:3|max:255|unique:products',
                     'description' =>'nullable',
                     'image' =>'mimes:jpeg,jpg,png,gif|nullable|max:10000',
