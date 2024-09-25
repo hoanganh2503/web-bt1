@@ -20,4 +20,8 @@ interface HomeRepositoryInterface extends BaseRepositoryInterface
     public function updateAddress(HomeRequest $request);
     public function deleteAddress($id);
 
+    public function checkout(HomeRequest $request);
+    public function order(HomeRequest $request);
+
+
 }

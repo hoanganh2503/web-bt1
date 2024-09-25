@@ -4,11 +4,13 @@ namespace App\Repositories\Home;
 
 use App\Http\Requests\HomeRequest;
 use App\Models\Address;
+use App\Models\Bill;
 use App\Models\Category;
 use App\Models\FeatureHome;
 use App\Models\FeatureProduct;
 use App\Models\Home;
 use App\Models\Product;
+use App\Models\ProductBill;
 use App\Models\ProductCart;
 use App\Models\User;
 use App\Repositories\Home\HomeRepositoryInterface;
@@ -323,6 +325,93 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
            'status' => 200,
            'message' => "Success",
            'data' => []
+        ]);
+    }
+
+    public function checkout(HomeRequest $request){
+        try{
+            $data = array();
+            $user_id = $request->user()->id;
+            $data['products'] =  ProductCart::where('user_id', $user_id)->get();
+            $total = 0;
+            foreach($data['products'] as $cart){
+                $product = FeatureProduct::find($cart->feature_product_id);
+                $cart['feature_name'] = $product->feature_name;
+                $cart['price'] = $product->selling_price * $cart->quantity;
+                $cart['img'] = asset('storage/'.$product['img']);
+                $total += $product->selling_price * $cart->quantity;
+            }
+            $data['address'] = Address::where('user_id', $user_id)->get();    
+            $data['total'] = $total;
+        }catch(\Exception $e){
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => "Success",
+            'data' => $data
+        ]);
+
+    }
+
+    public function order(HomeRequest $request){
+        try{
+            DB::beginTransaction();
+            $user_id = $request->user()->id;
+            $products =  ProductCart::where('user_id', $user_id)->get();
+            if ($products->isEmpty()) {
+                return response()->json([
+                   'status' => 400,
+                   'message' => 'No product in cart',
+                   'data' => []
+                ]);
+            }
+            $data = $request->only('address_id', 'delivery_id', 'note', 'total_price');
+            $data['payment_status'] = 0;
+            $data['created_at'] = time();
+            $data['updated_at'] = time();
+            $id = Bill::create($data)->id;
+
+            foreach($products as $cart){
+                $product = FeatureProduct::find($cart->feature_product_id);
+                if($cart->quantity > $product -> quantity){
+                    return response()->json([
+                        'status' => 400,
+                        'message' => 'Not enough stock for product '. $product->feature_name,
+                        'data' => []
+                    ]);
+                }
+                $order_data = [
+                    'bill_id' => $id,
+                    'feature_product_id' => $cart->feature_product_id,
+                    'quantity' => $cart->quantity,
+                    'price' => $product->selling_price,
+                    'created_at' => time(),
+                    'updated_at' => time()
+                ];
+                // dd($order_data);
+                FeatureProduct::find($cart->feature_product_id)->update(['quantity' => $product->quantity - $cart->quantity]);
+                ProductBill::create($order_data);
+            }
+            ProductCart::where('user_id', $user_id)->delete();
+        }catch(\Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]); 
+        }
+        
+        DB::commit();
+        return response()->json([
+            'status' => 200,
+            'message' => "Success",
+            'data' => []
         ]);
     }
 

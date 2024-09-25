@@ -292,4 +292,52 @@ class HomeController extends Controller
     {
         return $this->homeRepositoryInterface->deleteAddress($request->id);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/checkout",
+     *     summary="Checkout",
+     *     tags={"Pages for users"},
+     *     @OA\Response(response="200", description="Success",
+     *         @OA\MediaType(
+     *            mediaType="application/json"
+     *         )
+     *     ),
+     *    security={{"bearerAuth":{}}}
+     * )
+     */
+    public function checkout(HomeRequest $request) : JsonResponse
+    {
+        return $this->homeRepositoryInterface->checkout($request);
+    }
+
+        /**
+     * @OA\Post(
+     *     path="/api/order",
+     *     summary="Order",
+     *     tags={"Pages for users"},
+     *     @OA\Response(response="200", description="Success",
+     *         @OA\MediaType(
+     *            mediaType="application/json"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *        required=true,
+     *        @OA\MediaType(
+     *            mediaType="multipart/form-data",
+     *            @OA\Schema(
+     *                @OA\Property(property="address_id", type="integer", example=2),
+     *                @OA\Property(property="delivery_id", type="integer", example=1),
+     *                @OA\Property(property="note", type="string", example="Banh mi bo sua 5 nghin 1 cai."),
+     *                @OA\Property(property="total_price", type="integer", example=1234324),
+     *            )
+     *        )
+     *     ),
+     *    security={{"bearerAuth":{}}}
+     * )
+     */
+    public function order(HomeRequest $request) : JsonResponse
+    {
+        return $this->homeRepositoryInterface->order($request);
+    }
 }

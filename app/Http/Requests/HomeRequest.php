@@ -73,6 +73,14 @@ class HomeRequest extends FormRequest
                 ];
                 break;
 
+            case 'order':
+                $rules = [
+                    'delivery_id' =>'required|integer|exists:deliveries,id',
+                    'address_id' =>'required|exists:address,id',
+                    'total_price' =>'required|integer',
+                ];
+                break;
+
         } 
 
         return $rules;

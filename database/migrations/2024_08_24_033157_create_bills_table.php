@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignId('address_id')->constrained('address')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('delivery_id')->constrained('deliveries')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('payment_status');
+            $table->integer('total_price');
+            $table->text('note');
             $table->timestamps();
         });
     }

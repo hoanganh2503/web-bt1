@@ -29,4 +29,8 @@ class ProductCart extends Model
     protected $hidden = [
     ];
 
+    public function featureProduct(){
+        return $this->belongsTo(FeatureProduct::class);
+    }
+
 }

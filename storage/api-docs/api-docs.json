@@ -1082,6 +1082,78 @@
                 ]
             }
         },
+        "/api/checkout": {
+            "get": {
+                "tags": [
+                    "Pages for users"
+                ],
+                "summary": "Checkout",
+                "operationId": "763e79af535303159c5b86ea5b4d1ac6",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/order": {
+            "post": {
+                "tags": [
+                    "Pages for users"
+                ],
+                "summary": "Order",
+                "operationId": "00ca95cfef5cab504d46809a5661cbf8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "address_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "delivery_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "note": {
+                                        "type": "string",
+                                        "example": "Banh mi bo sua 5 nghin 1 cai."
+                                    },
+                                    "total_price": {
+                                        "type": "integer",
+                                        "example": 1234324
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/admin/products/index": {
             "get": {
                 "tags": [

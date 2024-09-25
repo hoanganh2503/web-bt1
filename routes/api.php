@@ -87,6 +87,9 @@ Route::middleware(['auth:sanctum', 'user'])->group(function() {
     Route::post('/create-address', [HomeController::class, 'createAddress']);
     Route::post('/edit-address', [HomeController::class, 'editAddress']);
     Route::delete('/delete-address', [HomeController::class, 'deleteAddress']);
+
+    Route::get('/checkout', [HomeController::class, 'checkout']);
+    Route::post('/order', [HomeController::class, 'order']);
 });    
 
 
