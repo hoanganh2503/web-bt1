@@ -1176,6 +1176,40 @@
                 ]
             }
         },
+        "/api/order-detail": {
+            "get": {
+                "tags": [
+                    "Pages for users"
+                ],
+                "summary": "Order detail",
+                "operationId": "3cc1a1bb26ac7597f6982c56f5152670",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of bill",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/admin/products/index": {
             "get": {
                 "tags": [

@@ -419,13 +419,14 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
 
     public function orderHistory(HomeRequest $request){
         try{
-            $addresses = Address::where('user_id', $request->user()->id)->pluck('id');
+            $addresses = Address::where('user_id', $request->user()->id)->orderBy('created_at', 'desc')->pluck('id');
             $data = array();
             foreach($addresses as $address){
-                $bill = Bill::where('address_id', $address)->orderBy('created_at', 'DESC')->get();
-                if (!$bill->isEmpty()) {
+                $bill = Bill::where('address_id', $address)->first();
+                if (!empty($bill)) {
                     $data[] = $bill;   
                 }
+
             }            
         }catch(\Exception $e){
             return response()->json([
@@ -438,7 +439,24 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
         return response()->json([
             'status' => 200,
             'message' => "Success",
-            'data' => $data[0]
+            'data' => $data
+        ]);
+    }
+
+    public function orderDetail(HomeRequest $request){
+        try{
+            $data = Bill::where('id', $request->id)->with('product')->get();
+        }catch(\Exception $e){
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => "Success",
+            'data' => $data
         ]);
     }
 

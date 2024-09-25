@@ -80,6 +80,11 @@ class HomeRequest extends FormRequest
                     'total_price' =>'required|integer',
                 ];
                 break;
+            case 'order-detail':
+                $rules = [
+                    'id' =>'required|integer|exists:bills,id',
+                ];
+                break;            
 
         } 
 

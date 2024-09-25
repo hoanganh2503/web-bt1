@@ -17,4 +17,8 @@ class Bill extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function product(){
+        return $this->hasMany(ProductBill::class);
+    }
 }
