@@ -1154,6 +1154,28 @@
                 ]
             }
         },
+        "/api/order-history": {
+            "get": {
+                "tags": [
+                    "Pages for users"
+                ],
+                "summary": "Order history",
+                "operationId": "6cf41f024e23d16fc4882de4daa76199",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/admin/products/index": {
             "get": {
                 "tags": [

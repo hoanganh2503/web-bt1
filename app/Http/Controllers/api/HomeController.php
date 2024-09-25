@@ -311,7 +311,7 @@ class HomeController extends Controller
         return $this->homeRepositoryInterface->checkout($request);
     }
 
-        /**
+    /**
      * @OA\Post(
      *     path="/api/order",
      *     summary="Order",
@@ -339,5 +339,23 @@ class HomeController extends Controller
     public function order(HomeRequest $request) : JsonResponse
     {
         return $this->homeRepositoryInterface->order($request);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/order-history",
+     *     summary="Order history",
+     *     tags={"Pages for users"},
+     *     @OA\Response(response="200", description="Success",
+     *         @OA\MediaType(
+     *            mediaType="application/json"
+     *         )
+     *     ),
+     *    security={{"bearerAuth":{}}}
+     * )
+     */
+    public function orderHistory(HomeRequest $request) : JsonResponse
+    {
+        return $this->homeRepositoryInterface->orderHistory($request);
     }
 }

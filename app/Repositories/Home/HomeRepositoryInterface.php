@@ -22,6 +22,6 @@ interface HomeRepositoryInterface extends BaseRepositoryInterface
 
     public function checkout(HomeRequest $request);
     public function order(HomeRequest $request);
-
+    public function orderHistory(HomeRequest $request);
 
 }

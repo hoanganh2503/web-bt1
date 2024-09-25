@@ -18,6 +18,8 @@ use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+use function PHPUnit\Framework\isEmpty;
+
 /**
  * Class HomeRepository.
  */
@@ -412,6 +414,31 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
             'status' => 200,
             'message' => "Success",
             'data' => []
+        ]);
+    }
+
+    public function orderHistory(HomeRequest $request){
+        try{
+            $addresses = Address::where('user_id', $request->user()->id)->pluck('id');
+            $data = array();
+            foreach($addresses as $address){
+                $bill = Bill::where('address_id', $address)->orderBy('created_at', 'DESC')->get();
+                if (!$bill->isEmpty()) {
+                    $data[] = $bill;   
+                }
+            }            
+        }catch(\Exception $e){
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => "Success",
+            'data' => $data[0]
         ]);
     }
 
