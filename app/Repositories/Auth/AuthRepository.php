@@ -28,10 +28,10 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
             if(!$user || !Hash::check($password, $user->password)){
                 DB::rollBack();
                 return response()->json([
-                    'status' => 404,
-                    'message' => 'Tài khoản hoặc mật khẩu không đúng',
+                    'status' => 403,
+                    'message' => 'Username or password incorrect',
                     'data' => []
-                 ], 404);
+                 ], 403);
             }
             $token = $user->createToken($user->name.'Auth-token')->plainTextToken;
             $data = [
@@ -144,10 +144,10 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
             if(!$user || !Hash::check($password, $user->password)){
                 DB::rollBack();
                 return response()->json([
-                    'status' => 404,
-                    'message' => 'Tài khoản hoặc mật khẩu không đúng',
+                    'status' => 403,
+                    'message' => 'Username or password incorrect',
                     'data' => []
-                 ], 404);
+                 ], 403);
             }
             $token = $user->createToken($user->name.'Auth-token')->plainTextToken;
             $data = [
