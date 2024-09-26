@@ -59,7 +59,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
                 }
             }
             $products = Product::select('products.*')
-                ->join('sells', 'products.id', '=', 'sells.product_id')
+                ->leftJoin('sells', 'products.id', '=', 'sells.product_id')
                 ->orderBy('sells.quantity', 'desc')
                 ->get();
             foreach($products as $item){
@@ -69,7 +69,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
             }
 
             $flashSale = Product::select('products.*')
-            ->join('sells', 'products.id', '=', 'sells.product_id')
+            ->leftJoin('sells', 'products.id', '=', 'sells.product_id')
             ->orderBy('sells.quantity', 'asc')
             ->get();
             foreach($flashSale as $item){
