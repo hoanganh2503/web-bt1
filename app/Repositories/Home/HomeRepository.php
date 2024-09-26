@@ -475,7 +475,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
 
     public function orderHistory(HomeRequest $request){
         try{ 
-            $data = Bill::orderBy('created_at', 'desc')->with('address')->get();        
+            $data = Bill::orderBy('created_at', 'desc')->with('address')->get();      
         }catch(\Exception $e){
             return response()->json([
                 'status' => 500,
@@ -494,6 +494,14 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
     public function orderDetail(HomeRequest $request){
         try{
             $data = Bill::where('id', $request->id)->with(['product', 'address'])->first();
+            foreach($data->product as $item){
+                $feature_product_id = $item->feature_product_id;
+                $feature_product = FeatureProduct::find($feature_product_id);
+                $item->feature_name = $feature_product->feature_name;
+                if($feature_product->img){
+                    $item->img = asset('storage/'.$feature_product->img);
+                }
+            }  
         }catch(\Exception $e){
             return response()->json([
                 'status' => 500,
