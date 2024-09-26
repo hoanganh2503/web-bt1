@@ -493,7 +493,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
 
     public function orderDetail(HomeRequest $request){
         try{
-            $data = Bill::where('id', $request->id)->with(['product', 'address'])->get();
+            $data = Bill::where('id', $request->id)->with(['product', 'address'])->first();
         }catch(\Exception $e){
             return response()->json([
                 'status' => 500,
