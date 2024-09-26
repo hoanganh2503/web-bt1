@@ -81,6 +81,7 @@ class HomeRequest extends FormRequest
                 ];
                 break;
             case 'order-detail':
+            case 'chage-status':
                 $rules = [
                     'id' =>'required|integer|exists:bills,id',
                 ];

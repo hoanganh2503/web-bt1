@@ -493,7 +493,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
 
     public function orderDetail(HomeRequest $request){
         try{
-            $data = Bill::where('id', $request->id)->with('product')->get();
+            $data = Bill::where('id', $request->id)->with(['product', 'address'])->get();
         }catch(\Exception $e){
             return response()->json([
                 'status' => 500,
@@ -505,6 +505,23 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
             'status' => 200,
             'message' => "Success",
             'data' => $data
+        ]);
+    }
+
+    public function changeStatus($id){
+        try{
+            Bill::find($id)->update(['status' => 5]);
+        }catch(\Exception $e){
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => "Success",
+            'data' => []
         ]);
     }
 

@@ -384,4 +384,30 @@ class HomeController extends Controller
     {
         return $this->homeRepositoryInterface->orderDetail($request);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/change-status",
+     *     summary="Change status",
+     *     tags={"Pages for users"},
+     *     @OA\Response(response="200", description="Success",
+     *         @OA\MediaType(
+     *            mediaType="application/json"
+     *         )
+     *     ),
+     *      @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="ID of bill",
+     *         example=1,
+     *         @OA\Schema(type="integer"),
+     *         required=false,
+     *      ),
+     *    security={{"bearerAuth":{}}}
+     * )
+     */
+    public function changeStatus(HomeRequest $request) : JsonResponse
+    {
+        return $this->homeRepositoryInterface->changeStatus($request->id);
+    }
 }
