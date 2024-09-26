@@ -12,6 +12,7 @@ use App\Models\Home;
 use App\Models\Product;
 use App\Models\ProductBill;
 use App\Models\ProductCart;
+use App\Models\Sell;
 use App\Models\User;
 use App\Repositories\Home\HomeRepositoryInterface;
 use App\Repositories\BaseRepository;
@@ -57,8 +58,30 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
                     $item['img'] = asset('storage/'.$item['img']);
                 }
             }
+            $products = Product::select('products.*')
+                ->join('sells', 'products.id', '=', 'sells.product_id')
+                ->orderBy('sells.quantity', 'desc')
+                ->get();
+            foreach($products as $item){
+                if(!empty($item['img'])){
+                    $item['img'] = asset('storage/'.$item['img']);
+                }
+            }
+
+            $flashSale = Product::select('products.*')
+            ->join('sells', 'products.id', '=', 'sells.product_id')
+            ->orderBy('sells.quantity', 'asc')
+            ->get();
+            foreach($flashSale as $item){
+                $item['sale_price'] = $item['selling_price'] * 0.8;
+                if(!empty($item['img'])){
+                    $item['img'] = asset('storage/'.$item['img']);
+                }
+            }
             $data['categories'] = $categories;
-            $data['newest_product'] = $product;           
+            $data['newest_product'] = $product; 
+            $data['best_sell'] = $products; 
+            $data['flash_sale'] = $flashSale;         
         }catch(\Exception $e){
             return response()->json([
                 'status' => 500,
@@ -159,7 +182,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
     public function cart(HomeRequest $request){
         try{
             $user_id = $request->user()->id;
-            $data = ProductCart::where('user_id', $user_id)->orderBy('created_at' ,'desc')->get();
+            $data = ProductCart::where('user_id', $user_id)->with('featureProduct')->orderBy('created_at' ,'desc')->get();
         }catch(\Exception $e){
             return response()->json([
                 'status' => 500,
@@ -406,9 +429,19 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
                     'created_at' => time(),
                     'updated_at' => time()
                 ];
-                // dd($order_data);
+
                 FeatureProduct::find($cart->feature_product_id)->update(['quantity' => $product->quantity - $cart->quantity]);
                 ProductBill::create($order_data);
+
+                $parentProduct = Sell::find($product->product_id);
+                if(empty($parentProduct)){
+                    Sell::create([
+                        'product_id' => $product->product_id,
+                        'quantity' => $cart->quantity
+                    ]);
+                }else{
+                    Sell::where('product_id', $product->product_id)->update(['quantity' => $cart->quantity + $parentProduct->quantity]);
+                }
             }
             ProductCart::where('user_id', $user_id)->delete();
         }catch(\Exception $e){
