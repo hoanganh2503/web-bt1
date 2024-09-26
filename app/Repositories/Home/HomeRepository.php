@@ -188,9 +188,9 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
             $total_price = 0;
             foreach ($products as $item) {
                     $item->featureProduct->img = asset('storage/' . $item->featureProduct->img);
-                    $item->featureProduct->total = $item->featureProduct->quantity * $item->featureProduct->selling_price;
+                    $item->featureProduct->total = $item->quantity * $item->featureProduct->selling_price;
                     
-                    $total_price += $item->featureProduct->quantity * $item->featureProduct->selling_price;
+                    $total_price += $item->quantity * $item->featureProduct->selling_price;
             }
             $data['products'] = $products;
             $data['total_price'] = $total_price;
@@ -474,16 +474,8 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
     }
 
     public function orderHistory(HomeRequest $request){
-        try{
-            $addresses = Address::where('user_id', $request->user()->id)->orderBy('created_at', 'desc')->pluck('id');
-            $data = array();
-            foreach($addresses as $address){
-                $bill = Bill::where('address_id', $address)->first();
-                if (!empty($bill)) {
-                    $data[] = $bill;   
-                }
-
-            }            
+        try{ 
+            $data = Bill::orderBy('created_at', 'desc')->with('address')->get();        
         }catch(\Exception $e){
             return response()->json([
                 'status' => 500,
