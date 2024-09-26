@@ -37,6 +37,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Home\HomeRepositoryInterface::class,
             \App\Repositories\Home\HomeRepository::class
         );
+
+        $this->app->singleton(
+            \App\Repositories\Bill\BillRepositoryInterface::class,
+            \App\Repositories\Bill\BillRepository::class
+        );
     }
 
     /**

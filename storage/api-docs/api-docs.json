@@ -243,6 +243,50 @@
                 ]
             }
         },
+        "/api/admin/bills/index": {
+            "get": {
+                "tags": [
+                    "Bill Management"
+                ],
+                "summary": "Get list of Bills",
+                "operationId": "e4435619508f266d193e3bb89bbe079e",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for paginated results",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "perpage",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 20
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/admin/categories/index": {
             "get": {
                 "tags": [
@@ -1830,6 +1874,10 @@
         {
             "name": "User Authentication",
             "description": "User Authentication"
+        },
+        {
+            "name": "Bill Management",
+            "description": "Bill Management"
         },
         {
             "name": "Categories Management",

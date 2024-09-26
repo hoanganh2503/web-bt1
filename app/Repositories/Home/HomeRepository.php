@@ -76,16 +76,27 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
     public function product($id){
         try{
             
-            $data = $this->product->with('listChild')->find($id);
-            if(!empty($data['img'])){
-                $data['img'] = asset('storage/'.$data['img']);
+            $currentProduct = $this->product->with('listChild')->find($id);
+            if(!empty($currentProduct['img'])){
+                $currentProduct['img'] = asset('storage/'.$currentProduct['img']);
             }
-            $data->listChild->map(function ($item) {
+            $currentProduct->listChild->map(function ($item) {
                 if (!empty($item['img'])) {
                     $item['img'] = asset('storage/' . $item['img']);
                 }
             });
-            
+
+            $data['currentProduct'] = $currentProduct;
+            $relatedProducts = $this->product
+            ->where('category_id', $currentProduct->category_id)
+            ->where('id', '<>', $currentProduct->id)
+            ->get();
+            foreach($relatedProducts as $item){
+                if(!empty($item['img'])){
+                    $item['img'] = asset('storage/'.$item['img']);
+                }
+            }
+            $data['relatedProducts'] = $relatedProducts;
         }catch(\Exception $e){
             return response()->json([
                 'status' => 500,

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\BillController;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\DeliveryController;
 use App\Http\Controllers\api\HomeController;
@@ -65,6 +66,10 @@ Route::group(['prefix'=>'admin'], function(){
             Route::delete('/delete-child', [ProductController::class, 'deleteChild']);
         });
 
+        Route::group(['prefix'=>'bills'], function(){
+            Route::get('/index', [BillController::class, 'index']);
+        });
+
     });    
 });
 
@@ -93,5 +98,3 @@ Route::middleware(['auth:sanctum', 'user'])->group(function() {
     Route::get('/order-history', [HomeController::class, 'orderHistory']);
     Route::get('/order-detail', [HomeController::class, 'orderDetail']);
 });
-
-
