@@ -386,7 +386,7 @@ class HomeController extends Controller
     }
 
     /**
-     * @OA\Get(
+     * @OA\Post(
      *     path="/api/change-status",
      *     summary="Change status",
      *     tags={"Pages for users"},

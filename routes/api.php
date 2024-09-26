@@ -99,5 +99,5 @@ Route::middleware(['auth:sanctum', 'user'])->group(function() {
     Route::post('/order', [HomeController::class, 'order']);
     Route::get('/order-history', [HomeController::class, 'orderHistory']);
     Route::get('/order-detail', [HomeController::class, 'orderDetail']);
-    Route::get('/change-status', [HomeController::class, 'changeStatus']);
+    Route::post('/change-status', [HomeController::class, 'changeStatus']);
 });

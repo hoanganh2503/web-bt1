@@ -1333,12 +1333,12 @@
             }
         },
         "/api/change-status": {
-            "get": {
+            "post": {
                 "tags": [
                     "Pages for users"
                 ],
                 "summary": "Change status",
-                "operationId": "6accf779e85a0683d40eb10b39097a2f",
+                "operationId": "45ebabd63432c2ddea4b12f288f7d2ab",
                 "parameters": [
                     {
                         "name": "id",
