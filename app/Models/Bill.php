@@ -14,11 +14,22 @@ class Bill extends Model
         'payment_status',
         'total_price',
         'note',
+        'status',
         'created_at',
         'updated_at',
     ];
 
     public function product(){
         return $this->hasMany(ProductBill::class);
+    }
+
+    public function getStatus(){
+        return [
+            0 => 'Đã đặt hàng',
+            1 => 'Đã xác nhận',
+            2 => 'Đang giao hàng',
+            3 => 'Giao hàng thành công',
+            4 => 'Đã hủy'
+        ];
     }
 }

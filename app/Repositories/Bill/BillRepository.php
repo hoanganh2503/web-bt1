@@ -42,17 +42,7 @@ class BillRepository extends BaseRepository implements BillRepositoryInterface
 
     public function getDetailBill($id){
         try{
-            
-            $data = $this->model->with('listChild')->find($id);
-            if(!empty($data['img'])){
-                $data['img'] = asset('storage/'.$data['img']);
-            }
-            $data->listChild->map(function ($item) {
-                if (!empty($item['img'])) {
-                    $item['img'] = asset('storage/' . $item['img']);
-                }
-            });
-            
+            $data = Bill::where('id', $id)->with('product')->get();
         }catch(\Exception $e){
             return response()->json([
                 'status' => 500,
@@ -64,6 +54,23 @@ class BillRepository extends BaseRepository implements BillRepositoryInterface
             'status' => 200,
             'message' => "Success",
             'data' => $data
+        ]);
+    }
+
+    public function changeStatus(BillRequest $request){
+        try{
+            $this->model->where('id', $request->bill_id)->update(['status' => $request->status]);
+        }catch(\Exception $e){
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => "Success",
+            'data' => []
         ]);
     }
 

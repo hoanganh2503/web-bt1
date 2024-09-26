@@ -45,14 +45,14 @@ class CategoryRequest extends FormRequest
             case 'create':
                 $rules = [
                     'name' =>'required|string|min:3|max:255|unique:categories',
-                    'image' =>'mimes:jpeg,jpg,png,gif|required|max:10000',
+                    'image' =>'mimes:jpeg,jpg,png,gif,webp|required|max:10000',
                 ];
                 break;
             case 'edit':
                 $rules = [
                     'id' =>'integer|required|exists:categories,id',
                     'name' =>'nullable|string|min:3|max:255|unique:categories',
-                    'image' =>'mimes:jpeg,jpg,png,gif|nullable|max:10000',
+                    'image' =>'mimes:jpeg,jpg,png,gif,webp|nullable|max:10000',
                 ];
                 break;
             case 'delete':

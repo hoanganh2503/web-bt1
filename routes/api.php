@@ -68,6 +68,8 @@ Route::group(['prefix'=>'admin'], function(){
 
         Route::group(['prefix'=>'bills'], function(){
             Route::get('/index', [BillController::class, 'index']);
+            Route::get('/detail', [BillController::class, 'detail']);
+            Route::post('/change-status', [BillController::class, 'changeStatus']);
         });
 
     });    

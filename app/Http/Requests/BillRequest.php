@@ -37,6 +37,17 @@ class BillRequest extends FormRequest
                     'perpage' => 'integer',
                 ];
                 break;
+            case 'detail':
+                $rules = [
+                    'id' =>'integer|required|exists:bills,id',
+                ];
+                break;
+            case 'change-status':
+                $rules = [
+                    'bill_id' =>'integer|required|exists:bills,id',
+                    'status' =>'integer|required|min:0|max:4'
+                ];
+                break;
         }
         return $rules;
     }

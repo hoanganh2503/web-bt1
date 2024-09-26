@@ -48,9 +48,9 @@ class ProductRequest extends FormRequest
                     'category_id' => 'required|integer|exists:categories,id',
                     'cost_price' =>'required|integer|min:0',
                     'selling_price' =>'required|integer|min:' . request()->input('cost_price') + 1,
-                    'name' =>'required|string|min:3|max:255|unique:products',
+                    'name' =>'required|string|min:1|max:255|unique:products',
                     'description' =>'required',
-                    'image' =>'mimes:jpeg,jpg,png,gif|required|max:10000',
+                    'image' =>'mimes:jpeg,jpg,png,gif,webp|required|max:10000',
                 ];
                 break;
             case 'edit':
@@ -61,7 +61,7 @@ class ProductRequest extends FormRequest
                     'selling_price' =>'nullable|integer|min:' . request()->input('cost_price') + 1,
                     'name' =>'nullable|string|min:3|max:255|unique:products',
                     'description' =>'nullable',
-                    'image' =>'mimes:jpeg,jpg,png,gif|nullable|max:10000',
+                    'image' =>'mimes:jpeg,jpg,png,gif,webp|nullable|max:10000',
                 ];
                 break;
             case 'detail-child':
@@ -73,11 +73,11 @@ class ProductRequest extends FormRequest
             case 'create-child':
                 $rules = [
                     'product_id' =>'required|exists:products,id',
-                    'feature_name' =>'required|string|min:3|max:255|unique:feature_products',
+                    'feature_name' =>'required|string|min:1|max:255|unique:feature_products',
                     'cost_price' =>'required|integer|min:0',
                     'selling_price' =>'required|integer|min:' . request()->input('cost_price') + 1,
                     'quantity' =>'required|integer|min:0',
-                    'image' =>'mimes:jpeg,jpg,png,gif|required|max:10000',
+                    'image' =>'mimes:jpeg,jpg,png,gif,webp|required|max:10000',
                 ];
                 break;
             case 'edit-child':
@@ -88,7 +88,7 @@ class ProductRequest extends FormRequest
                     'cost_price' =>'nullable|integer|min:0',
                     'selling_price' =>'nullable|integer|min:' . request()->input('cost_price') + 1,
                     'quantity' =>'nullable|integer|min:0',
-                    'image' =>'mimes:jpeg,jpg,png,gif|nullable|max:10000',
+                    'image' =>'mimes:jpeg,jpg,png,gif,webp|nullable|max:10000',
                 ];
                 break;
 

@@ -47,7 +47,7 @@ class DeliveryRequest extends FormRequest
                     'address' =>'required|string|max:255',
                     'phone' =>'required|regex:/(0)[0-9]{7}/|max:12|unique:deliveries',
                     'email' =>'required|email|unique:deliveries',
-                    'image' =>'mimes:jpeg,jpg,png,gif|required|max:10000',
+                    'image' =>'mimes:jpeg,jpg,png,gif,webp|required|max:10000',
                 ];
                 break;
             case 'edit':
@@ -57,7 +57,7 @@ class DeliveryRequest extends FormRequest
                     'address' =>'nullable|string|max:255',
                     'phone' =>'nullable|regex:/(0)[0-9]{7}/|max:12|unique:deliveries',
                     'email' =>'nullable|email|unique:deliveries',
-                    'image' =>'mimes:jpeg,jpg,png,gif|nullable|max:10000',
+                    'image' =>'mimes:jpeg,jpg,png,gif,webp|nullable|max:10000',
                 ];
                 break;
             case 'delete':

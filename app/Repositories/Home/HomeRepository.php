@@ -417,6 +417,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
             }
             $data = $request->only('address_id', 'delivery_id', 'note', 'total_price');
             $data['payment_status'] = 0;
+            $data['status'] = 0;
             $data['created_at'] = time();
             $data['updated_at'] = time();
             $id = Bill::create($data)->id;

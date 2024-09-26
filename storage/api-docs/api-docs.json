@@ -287,6 +287,84 @@
                 ]
             }
         },
+        "/api/admin/bills/detail": {
+            "get": {
+                "tags": [
+                    "Bill Management"
+                ],
+                "summary": "Get detail of Bills",
+                "operationId": "b41157aafb8376b9a0fa3fd39b067ad5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of bill",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/bills/change-status": {
+            "post": {
+                "tags": [
+                    "Bill Management"
+                ],
+                "summary": "Change the status of the order",
+                "operationId": "1a85d714553fcefb262eb77cac861a39",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "1: Đã đặt hàng; 2: Đã xác nhận; 3:Đang giao hàng; 4:Giao hàng thành công; 5:Đã hủy",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "bill_id",
+                        "in": "query",
+                        "description": "Bill id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/admin/categories/index": {
             "get": {
                 "tags": [
