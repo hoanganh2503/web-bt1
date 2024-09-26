@@ -73,7 +73,7 @@ class ProductRequest extends FormRequest
             case 'create-child':
                 $rules = [
                     'product_id' =>'required|exists:products,id',
-                    'feature_name' =>'required|string|min:1|max:255|unique:feature_products',
+                    'feature_name' =>'required|string|min:1|max:255',
                     'cost_price' =>'required|integer|min:0',
                     'selling_price' =>'required|integer|min:' . request()->input('cost_price') + 1,
                     'quantity' =>'required|integer|min:0',
@@ -84,7 +84,7 @@ class ProductRequest extends FormRequest
                 $rules = [
                     'id' =>'required|exists:feature_products,id',
                     'product_id' =>'nullable|exists:products,id',
-                    'feature_name' =>'nullable|string|min:3|max:255|unique:feature_products',
+                    'feature_name' =>'nullable|string|min:3|max:255',
                     'cost_price' =>'nullable|integer|min:0',
                     'selling_price' =>'nullable|integer|min:' . request()->input('cost_price') + 1,
                     'quantity' =>'nullable|integer|min:0',

@@ -5,6 +5,7 @@ namespace App\Repositories\Bill;
 use App\Http\Requests\BillRequest;
 use App\Models\Address;
 use App\Models\Bill;
+use App\Models\FeatureProduct;
 use App\Models\User as ModelsUser;
 use App\Repositories\Bill\BillRepositoryInterface;
 use App\Repositories\BaseRepository;
@@ -45,7 +46,15 @@ class BillRepository extends BaseRepository implements BillRepositoryInterface
 
     public function getDetailBill($id){
         try{
-            $data = Bill::where('id', $id)->with(['product', 'address'])->get();
+            $data = Bill::where('id', $id)->with(['product', 'address'])->first();
+            foreach($data->product as $item){
+                $feature_product_id = $item->feature_product_id;
+                $feature_product = FeatureProduct::find($feature_product_id);
+                $item->feature_name = $feature_product->feature_name;
+                if($feature_product->img){
+                    $item->img = asset('storage/'.$feature_product->img);
+                }
+            }
         }catch(\Exception $e){
             return response()->json([
                 'status' => 500,

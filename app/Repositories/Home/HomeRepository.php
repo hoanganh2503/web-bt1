@@ -19,8 +19,6 @@ use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-use function PHPUnit\Framework\isEmpty;
-
 /**
  * Class HomeRepository.
  */
@@ -61,7 +59,9 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
             $products = Product::select('products.*')
                 ->leftJoin('sells', 'products.id', '=', 'sells.product_id')
                 ->orderBy('sells.quantity', 'desc')
-                ->get();
+                ->get()->unique('id');
+            $products = array_slice($products->values()->all(), 0, 5, true);
+
             foreach($products as $item){
                 if(!empty($item['img'])){
                     $item['img'] = asset('storage/'.$item['img']);
@@ -69,9 +69,11 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
             }
 
             $flashSale = Product::select('products.*')
-            ->leftJoin('sells', 'products.id', '=', 'sells.product_id')
-            ->orderBy('sells.quantity', 'asc')
-            ->get();
+                ->leftJoin('sells', 'products.id', '=', 'sells.product_id')
+                ->orderBy('sells.quantity', 'asc')
+                ->get()->unique('id');
+            $flashSale = array_slice($flashSale->values()->all(), 0, 5, true);
+
             foreach($flashSale as $item){
                 $item['sale_price'] = $item['selling_price'] * 0.8;
                 if(!empty($item['img'])){
@@ -443,7 +445,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
                 FeatureProduct::find($cart->feature_product_id)->update(['quantity' => $product->quantity - $cart->quantity]);
                 ProductBill::create($order_data);
 
-                $parentProduct = Sell::find($product->product_id);
+                $parentProduct = Sell::where('product_id', $product->product_id)->first();
                 if(empty($parentProduct)){
                     Sell::create([
                         'product_id' => $product->product_id,
