@@ -183,6 +183,11 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
         try{
             $user_id = $request->user()->id;
             $data = ProductCart::where('user_id', $user_id)->with('featureProduct')->orderBy('created_at' ,'desc')->get();
+            foreach ($data as $item) {
+                if ($item->featureProduct) {
+                    $item->featureProduct->img = asset('storage/' . $item->featureProduct->img);
+                }
+            }
         }catch(\Exception $e){
             return response()->json([
                 'status' => 500,
