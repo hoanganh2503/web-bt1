@@ -182,12 +182,16 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
     public function cart(HomeRequest $request){
         try{
             $user_id = $request->user()->id;
-            $data = ProductCart::where('user_id', $user_id)->with('featureProduct')->orderBy('created_at' ,'desc')->get();
-            foreach ($data as $item) {
-                if ($item->featureProduct) {
+            $products = ProductCart::where('user_id', $user_id)->with('featureProduct')->orderBy('created_at' ,'desc')->get();
+            $total_price = 0;
+            foreach ($products as $item) {
                     $item->featureProduct->img = asset('storage/' . $item->featureProduct->img);
-                }
+                    $item->featureProduct->total = $item->featureProduct->quantity * $item->featureProduct->selling_price;
+                    
+                    $total_price += $item->featureProduct->quantity * $item->featureProduct->selling_price;
             }
+            $data['products'] = $products;
+            $data['total_price'] = $total_price;
         }catch(\Exception $e){
             return response()->json([
                 'status' => 500,
