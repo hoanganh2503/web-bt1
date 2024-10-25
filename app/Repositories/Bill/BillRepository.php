@@ -39,7 +39,7 @@ class BillRepository extends BaseRepository implements BillRepositoryInterface
 
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -64,7 +64,7 @@ class BillRepository extends BaseRepository implements BillRepositoryInterface
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -81,7 +81,7 @@ class BillRepository extends BaseRepository implements BillRepositoryInterface
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => []
         ]);
     }

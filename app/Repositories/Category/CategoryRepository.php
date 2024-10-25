@@ -42,7 +42,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -62,7 +62,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -136,7 +136,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         DB::commit();
         return response()->json([
            'status' => 200,
-           'message' => "Success",
+           'message' => "Thành công",
            'data' => []
         ]);
     }

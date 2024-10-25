@@ -93,7 +93,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -131,7 +131,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -176,7 +176,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
         DB::commit();
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => []
         ]);
     }
@@ -204,7 +204,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
 
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -222,7 +222,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $user
         ], 200);  
 
@@ -289,7 +289,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
 
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -306,7 +306,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -370,7 +370,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
         DB::commit();
         return response()->json([
            'status' => 200,
-           'message' => "Success",
+           'message' => "Thành công",
            'data' => []
         ]);
     }
@@ -399,7 +399,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
 
@@ -468,7 +468,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
         DB::commit();
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => []
         ]);
     }
@@ -486,7 +486,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
 
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -511,7 +511,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -528,7 +528,7 @@ class HomeRepository extends BaseRepository implements HomeRepositoryInterface
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => []
         ]);
     }

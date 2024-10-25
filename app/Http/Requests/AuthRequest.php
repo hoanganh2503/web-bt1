@@ -7,7 +7,6 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class AuthRequest extends FormRequest
-
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,56 +25,82 @@ class AuthRequest extends FormRequest
      */
     public function rules()
     {   
-        $uri = explode('/', $this->route()->Uri());
+        $uri = explode('/', $this->route()->uri());
         $rules = array();
-        if (count($uri) == 3){
-            $action =$uri[2];
-            switch($action) {
+        if (count($uri) == 3) {
+            $action = $uri[2];
+            switch ($action) {
                 case 'login':
                     $rules = [
-                        'email' =>'required|email|max:255',
+                        'email' => 'required|email|max:255',
                         'password' => 'required|string|min:6',
                     ];
                     break;
                 case 'change-profile':
                     $rules = [
-                        'old_password' =>'nullable|string|min:6|max:255',
-                        'new_password' =>'nullable|string|min:6|max:255',
+                        'old_password' => 'nullable|string|min:6|max:255',
+                        'new_password' => 'nullable|string|min:6|max:255',
                         'phone' => 'nullable|regex:/(0)[0-9]{9}/',
-                        'name' =>'nullable|string|min:3|max:255',
-                        'image' =>'mimes:jpeg,jpg,png,gif,webp|nullable|max:10000',
+                        'name' => 'nullable|string|min:3|max:255',
+                        'image' => 'mimes:jpeg,jpg,png,gif,webp|nullable|max:10000',
                     ];
                     break;
             }            
-        }else{
-            $action =$uri[1];
-            switch($action) {
+        } else {
+            $action = $uri[1];
+            switch ($action) {
                 case 'login':
                     $rules = [
-                        'email' =>'required|email|max:255',
+                        'email' => 'required|email|max:255',
                         'password' => 'required|string|min:6',
                     ];
                     break;
                 case 'register':
                     $rules = [
-                        'name' =>'required|string|max:255',
+                        'name' => 'required|string|max:255',
                         'phone' => 'required|regex:/(0)[0-9]{9}/|unique:users',
-                        'email' =>'required|email|max:255|unique:users',
+                        'email' => 'required|email|max:255|unique:users',
                         'password' => 'required|string|min:6',
                     ];
                     break;
                 case 'change-profile':
                     $rules = [
-                        'new_password' =>'nullable|string|min:6|max:255',
+                        'new_password' => 'nullable|string|min:6|max:255',
                         'phone' => 'nullable|regex:/(0)[0-9]{9}/',
-                        'name' =>'nullable|string|min:3|max:255',
-                        'image' =>'mimes:jpeg,jpg,png,gif|nullable|max:10000',
+                        'name' => 'nullable|string|min:3|max:255',
+                        'image' => 'mimes:jpeg,jpg,png,gif|nullable|max:10000',
                     ];
                     break;
             } 
         }
 
         return $rules;
+    }
+
+    /**
+     * Custom messages for validation errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'email.required' => 'Email là bắt buộc.',
+            'email.email' => 'Email không hợp lệ.',
+            'email.max' => 'Email không được vượt quá 255 ký tự.',
+            'password.required' => 'Mật khẩu là bắt buộc.',
+            'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
+            'name.required' => 'Tên là bắt buộc.',
+            'name.string' => 'Tên phải là chuỗi.',
+            'name.max' => 'Tên không được vượt quá 255 ký tự.',
+            'phone.required' => 'Số điện thoại là bắt buộc.',
+            'phone.regex' => 'Số điện thoại không hợp lệ.',
+            'phone.unique' => 'Số điện thoại đã tồn tại.',
+            'image.mimes' => 'Hình ảnh phải có định dạng jpeg, jpg, png, gif hoặc webp.',
+            'image.max' => 'Hình ảnh không được vượt quá 10MB.',
+            'old_password.min' => 'Mật khẩu cũ phải có ít nhất 6 ký tự.',
+            'new_password.min' => 'Mật khẩu mới phải có ít nhất 6 ký tự.',
+        ];
     }
 
     protected function failedValidation(Validator $validator)

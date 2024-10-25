@@ -50,7 +50,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -70,7 +70,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -92,7 +92,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         DB::commit();
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => []
         ]);
     }
@@ -116,7 +116,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         DB::commit();
         return response()->json([
            'status' => 200,
-           'message' => "Success",
+           'message' => "Thành công",
            'data' => []
         ]);
     }

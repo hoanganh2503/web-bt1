@@ -29,7 +29,7 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
                 DB::rollBack();
                 return response()->json([
                     'status' => 403,
-                    'message' => 'Username or password incorrect',
+                    'message' => 'Tài khoản hoặc mật khẩu không chính xác',
                     'data' => []
                  ], 403);
             }
@@ -48,7 +48,7 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ], 200);
     }
@@ -66,7 +66,7 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $user
         ], 200);  
 
@@ -84,7 +84,7 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
         }
         return response()->json([
             'status' => 200,
-            'message' => "Logout successfully",
+            'message' => "Đăng xuất thành công",
             'data' => []
         ], 200);  
     }
@@ -104,7 +104,7 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
                 if(!Hash::check($oldPassword, $user->password)){
                     return response()->json([
                         'status' => 422,
-                        'message' => 'Old password is incorrect!',
+                        'message' => 'Mật khẩu cũ không đi!',
                         'data' => []
                     ]);
                 }
@@ -130,7 +130,7 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
         DB::commit();
         return response()->json([
             'status' => 200,
-            'message' => 'Update profile successfully',
+            'message' => 'Cập nhật thông tin thành công',
             'data' => []
         ]);
 
@@ -145,7 +145,7 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
                 DB::rollBack();
                 return response()->json([
                     'status' => 403,
-                    'message' => 'Username or password incorrect',
+                    'message' => 'Tài khoản hoặc mật khẩu không đúng',
                     'data' => []
                  ], 403);
             }
@@ -164,7 +164,7 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ], 200);
     }
@@ -196,7 +196,7 @@ class AuthRepository extends BaseRepository implements AuthRepositoryInterface
         DB::commit();
          return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ], 200);
     }

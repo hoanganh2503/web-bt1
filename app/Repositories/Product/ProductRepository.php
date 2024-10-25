@@ -56,7 +56,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -83,7 +83,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -160,7 +160,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         DB::commit();
         return response()->json([
            'status' => 200,
-           'message' => "Success",
+           'message' => "Thành công",
            'data' => []
         ]);
     }
@@ -180,7 +180,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -252,7 +252,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         DB::commit();
         return response()->json([
            'status' => 200,
-           'message' => "Success",
+           'message' => "Thành công",
            'data' => []
         ]);
     }

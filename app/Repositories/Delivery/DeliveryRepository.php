@@ -42,7 +42,7 @@ class DeliveryRepository extends BaseRepository implements DeliveryRepositoryInt
 
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -62,7 +62,7 @@ class DeliveryRepository extends BaseRepository implements DeliveryRepositoryInt
         }
         return response()->json([
             'status' => 200,
-            'message' => "Success",
+            'message' => "Thành công",
             'data' => $data
         ]);
     }
@@ -135,7 +135,7 @@ class DeliveryRepository extends BaseRepository implements DeliveryRepositoryInt
         DB::commit();
         return response()->json([
            'status' => 200,
-           'message' => "Success",
+           'message' => "Thành công",
            'data' => []
         ]);
     }
